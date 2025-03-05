@@ -1,4 +1,4 @@
-name: Mule CICD with Mule Maven
+name: Mule CICD with Mule Maven1
 
 on:
   push:
