@@ -23,7 +23,13 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      env:
+        anypointUsername: ${{ secrets.ANYPOINT_USERNAME }}
+        anypointPassword: ${{ secrets.ANYPOINT_PASSWORD }}
+      run: |
+        mvn -B package --file pom.xml \
+        -Danypoint.username="$anypointUsername" \
+        -Danypoint.password="$anypointPassword"
     - name: Stamp artifact file name with commit hash
       run: |
         artifactName1=$(ls target/*.jar | head -1)
