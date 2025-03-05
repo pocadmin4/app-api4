@@ -40,9 +40,7 @@ jobs:
         anypointPassword: ${{ secrets.ANYPOINT_PASSWORD }}
       run: |
         mvn -B package --file pom.xml \
-        --settings ~/.m2/settings.xml \
-        -Danypoint.username="$anypointUsername" \
-        -Danypoint.password="$anypointPassword"
+        --settings ~/.m2/settings.xml
     - name: Stamp artifact file name with commit hash
       run: |
         artifactName1=$(ls target/*.jar | head -1)
