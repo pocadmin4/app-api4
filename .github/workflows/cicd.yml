@@ -88,10 +88,6 @@ jobs:
         artifactName=$(ls *.jar | head -1)
         mvn deploy -DmuleDeploy -Dmule.artifact=$artifactName \
         --settings ~/.m2/settings.xml \
-        -Danypoint.username="$anypointUsername" \
-        -Danypoint.password="$anypointPassword" \
-        -DworkerType=MICRO -Dworkers=1 -Dregion=us-east-2 \
-        -Denvironment=Sandbox -Dcloudhub.application.name=app-api4 \
         -Danypoint.platform.client_id=74e4c8098c51474baba396140603b46a \
         -Danypoint.platform.client_secret=87CE519fbCB44A0Cb2e03bB24F515CDE
         
