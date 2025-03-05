@@ -22,12 +22,25 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+    - name: Configure Maven settings.xml
+      run: |
+        mkdir -p ~/.m2
+        echo '<settings>
+          <servers>
+            <server>
+              <id>anypoint-exchange-v3</id>
+              <username>${env.anypointUsername}</username>
+              <password>${env.anypointPassword}</password>
+            </server>
+          </servers>
+        </settings>' > ~/.m2/settings.xml
     - name: Build with Maven
       env:
         anypointUsername: ${{ secrets.ANYPOINT_USERNAME }}
         anypointPassword: ${{ secrets.ANYPOINT_PASSWORD }}
       run: |
         mvn -B package --file pom.xml \
+        --settings ~/.m2/settings.xml \
         -Danypoint.username="$anypointUsername" \
         -Danypoint.password="$anypointPassword"
     - name: Stamp artifact file name with commit hash
