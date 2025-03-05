@@ -51,7 +51,16 @@ jobs:
       with:
         name: artifacts
         path: target/*.jar
-      
+    - name: Publish to Anypoint Exchange
+      env:
+        anypointUsername: ${{ secrets.ANYPOINT_USERNAME }}
+        anypointPassword: ${{ secrets.ANYPOINT_PASSWORD }}
+      run: |
+        mvn deploy \
+        --settings ~/.m2/settings.xml \
+        -Danypoint.platform.client_id=74e4c8098c51474baba396140603b46a \
+        -Danypoint.platform.client_secret=87CE519fbCB44A0Cb2e03bB24F515CDE
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
