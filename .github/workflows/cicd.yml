@@ -68,6 +68,18 @@ jobs:
     - uses: actions/download-artifact@master
       with:
         name: artifacts
+    - name: Configure Maven settings.xml
+      run: |
+        mkdir -p ~/.m2
+        echo '<settings>
+          <servers>
+            <server>
+              <id>anypoint-exchange-v3</id>
+              <username>${env.anypointUsername}</username>
+              <password>${env.anypointPassword}</password>
+            </server>
+          </servers>
+        </settings>' > ~/.m2/settings.xml
     - name: Deploy to CloudHub Dev env
       env:
         anypointUsername: ${{ secrets.ANYPOINT_USERNAME }}
@@ -75,6 +87,7 @@ jobs:
       run: |
         artifactName=$(ls *.jar | head -1)
         mvn deploy -DmuleDeploy -Dmule.artifact=$artifactName \
+        --settings ~/.m2/settings.xml \
         -Danypoint.username="$anypointUsername" \
         -Danypoint.password="$anypointPassword" \
         -DworkerType=MICRO -Dworkers=1 -Dregion=us-east-2 \
