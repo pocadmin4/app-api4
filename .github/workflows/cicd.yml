@@ -47,10 +47,6 @@ jobs:
         commitHash=$(git rev-parse --short "$GITHUB_SHA")
         artifactName2=$(ls target/*.jar | head -1 | sed "s/.jar/.$commitHash.jar/g")
         mv $artifactName1 $artifactName2
-    - uses: actions/upload-artifact@master
-      with:
-        name: artifacts
-        path: target/*.jar
 
   deploy:
     needs: build
@@ -63,9 +59,6 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
-    - uses: actions/download-artifact@master
-      with:
-        name: artifacts
     - name: Configure Maven settings.xml
       run: |
         mkdir -p ~/.m2
