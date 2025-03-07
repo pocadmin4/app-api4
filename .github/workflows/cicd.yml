@@ -21,31 +21,12 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Configure Maven settings.xml
-      run: |
-        mkdir -p ~/.m2
-        echo '<settings>
-          <servers>
-            <server>
-              <id>anypoint-exchange-v3</id>
-              <username>${env.anypointUsername}</username>
-              <password>${env.anypointPassword}</password>
-            </server>
-          </servers>
-        </settings>' > ~/.m2/settings.xml
-    - name: Build with Maven
+    - name: Build with Maven And push to exchange
       env:
         anypointUsername: ${{ secrets.ANYPOINT_USERNAME }}
         anypointPassword: ${{ secrets.ANYPOINT_PASSWORD }}
       run: |
-        mvn -B package --file pom.xml \
-        --settings ~/.m2/settings.xml
-    - name: Stamp artifact file name with commit hash
-      run: |
-        artifactName1=$(ls target/*.jar | head -1)
-        commitHash=$(git rev-parse --short "$GITHUB_SHA")
-        artifactName2=$(ls target/*.jar | head -1 | sed "s/.jar/.$commitHash.jar/g")
-        mv $artifactName1 $artifactName2
+        mvn deploy -s ./.maven/settings.xml
 
   deploy:
     needs: build
@@ -60,26 +41,7 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
-    - name: Configure Maven settings.xml
+    - name: Deploy to CloudHub
       run: |
-        mkdir -p ~/.m2
-        echo '<settings>
-          <servers>
-            <server>
-              <id>anypoint-exchange-v3</id>
-              <username>${env.anypointUsername}</username>
-              <password>${env.anypointPassword}</password>
-            </server>
-          </servers>
-        </settings>' > ~/.m2/settings.xml
-    - name: Deploy to CloudHub Dev env
-      env:
-        anypointUsername: ${{ secrets.ANYPOINT_USERNAME }}
-        anypointPassword: ${{ secrets.ANYPOINT_PASSWORD }}
-      run: |
-        artifactName=$(ls *.jar | head -1)
-        mvn deploy -DmuleDeploy -Dmule.artifact=$artifactName \
-        --settings ~/.m2/settings.xml \
-        -Danypoint.platform.client_id=74e4c8098c51474baba396140603b46a \
-        -Danypoint.platform.client_secret=87CE519fbCB44A0Cb2e03bB24F515CDE
+         mvn deploy -DmuleDeploy -s ./.maven/settings.xml
         
