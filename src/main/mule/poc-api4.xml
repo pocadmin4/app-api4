@@ -131,6 +131,16 @@ output application/json
                 <ee:set-variable variableName="customerId">attributes.uriParams.'customerId'</ee:set-variable>
             </ee:variables>
         </ee:transform>
-        <logger level="INFO" message="delete:\customers\(customerId):poc-api4-config" />
+		<ee:transform doc:name="Transform Message" doc:id="4a109c47-dccb-44d4-8ed2-e71eaa629c1c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message": "ok"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" message="delete:\customers\(customerId):poc-api4-config" />
     </flow>
 </mule>

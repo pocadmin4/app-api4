@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="new-test-suite.xml" />
+	<munit:test name="new-test-suite-delete:\customers\(customerId):poc-api4-configTest" doc:id="3699223a-12f3-4c0d-a392-4ee72e67c214" description="Test">
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to delete:\customers\(customerId):poc-api4-config" doc:id="8ff7d46e-49ae-46a6-a3d9-975521767a8e" name="delete:\customers\(customerId):poc-api4-config"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Assert that" doc:id="110c7fe2-5215-4487-8cb9-2d9b912f08c5" expression="#[payload.message]" is="#[MunitTools::equalTo('ok')]" message="NG"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>
