@@ -5,7 +5,7 @@
 	<groupId>2ce99b8f-b3a3-4a26-a229-47975509fc7d</groupId>
 	<!-- business group ID -->
 	<artifactId>app-api4</artifactId>
-	<version>1.0.10</version>
+	<version>1.0.11</version>
 	<!-- this has to change EVERY TIME you want to re-deploy -->
 	<packaging>mule-application</packaging>
 
@@ -58,11 +58,11 @@
 				<version>${munit.version}</version>
 				<executions>
 					<execution>
-					<id>test</id>
-					<phase>test</phase>
-					<goals>
-						<goal>test</goal>
-					</goals>
+						<id>test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
@@ -90,18 +90,6 @@
 			<type>zip</type>
 		</dependency>
 		<dependency>
-			<groupId>org.mule.modules</groupId>
-			<artifactId>mule-apikit-module</artifactId>
-			<version>1.11.2</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.weave</groupId>
-			<artifactId>assertions</artifactId>
-			<version>1.2.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.mulesoft.munit</groupId>
 			<artifactId>munit-runner</artifactId>
 			<version>${munit.version}</version>
@@ -109,10 +97,22 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.mule.modules</groupId>
+			<artifactId>mule-apikit-module</artifactId>
+			<version>1.11.2</version>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
 			<groupId>com.mulesoft.munit</groupId>
 			<artifactId>munit-tools</artifactId>
 			<version>${munit.version}</version>
 			<classifier>mule-plugin</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mule.weave</groupId>
+			<artifactId>assertions</artifactId>
+			<version>1.2.1</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
