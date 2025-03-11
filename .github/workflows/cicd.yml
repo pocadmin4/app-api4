@@ -28,6 +28,8 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+    environment:
+      name: production-blue-build
     steps:
     - uses: actions/checkout@v3
     - uses: actions/cache@v3
